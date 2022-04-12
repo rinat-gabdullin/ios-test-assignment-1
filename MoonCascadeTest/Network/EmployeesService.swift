@@ -7,26 +7,41 @@
 
 import Foundation
 
-class EmployeesService {
+protocol IEmployeesService {
+    func fetchAll() async throws -> [Employee]
+}
+
+protocol IURLSession {
+    func data(from url: URL) async throws -> Data
+}
+
+extension URLSession: IURLSession {
+    public func data(from url: URL) async throws -> Data {
+        try await data(from: url).0
+    }
+}
+
+class EmployeesService: IEmployeesService {
     
-    let urlSession: URLSession
+    let urlSession: IURLSession
     let sources: [URL]
     
-    internal init(urlSession: URLSession, sources: [URL]) {
+    internal init(urlSession: IURLSession, sources: [URL]) {
         self.urlSession = urlSession
         self.sources = sources
     }
     
     func fetchAll() async throws -> [Employee] {
-        var result = [Employee]()
+        var result = Set<Employee>()
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         for source in sources {
+            // TODO: Replace serial request sending with concurrent
             let fetched = try await urlSession.data(from: source)
-            let decoded = try decoder.decode(EmployeesResponse.self, from: fetched.0)
-            result.append(contentsOf: decoded.employees)
+            let decoded = try decoder.decode(EmployeesResponse.self, from: fetched)
+            result.formUnion(decoded.employees)
         }
-        return result
+        return Array(result)
     }
 }

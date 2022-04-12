@@ -10,6 +10,8 @@
 		1523342127E858F10051C9D9 /* EmployeeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523342027E858F10051C9D9 /* EmployeeDetailsViewController.swift */; };
 		1523342627E8783C0051C9D9 /* UIResponder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523342527E8783C0051C9D9 /* UIResponder+Extensions.swift */; };
 		1523342827E8787E0051C9D9 /* UIAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523342727E8787E0051C9D9 /* UIAction+Extensions.swift */; };
+		155FB43F2805E406004AD8A2 /* EmployeeListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155FB43E2805E406004AD8A2 /* EmployeeListProvider.swift */; };
+		155FB4412805E673004AD8A2 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155FB4402805E673004AD8A2 /* ListViewModel.swift */; };
 		15A2270D27DB6FB00011945E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2270C27DB6FB00011945E /* AppDelegate.swift */; };
 		15A2270F27DB6FB00011945E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2270E27DB6FB00011945E /* SceneDelegate.swift */; };
 		15A2271127DB6FB00011945E /* EmployeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2271027DB6FB00011945E /* EmployeeListViewController.swift */; };
@@ -25,11 +27,10 @@
 		15A2274527DD2BB60011945E /* EmployeePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2274427DD2BB60011945E /* EmployeePosition.swift */; };
 		15A2274727DD2CCD0011945E /* EmployeeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2274627DD2CCD0011945E /* EmployeeProject.swift */; };
 		15A2274927DD2DB00011945E /* EmployeesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2274827DD2DB00011945E /* EmployeesService.swift */; };
-		15A2274B27DD323E0011945E /* EmployeesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2274A27DD323E0011945E /* EmployeesProvider.swift */; };
 		15A2274E27DD34290011945E /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2274D27DD34290011945E /* FileCache.swift */; };
 		15A2275027DD3B8C0011945E /* EmployeeListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2274F27DD3B8C0011945E /* EmployeeListAssembly.swift */; };
 		15A2275227DD3EAC0011945E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2275127DD3EAC0011945E /* Constants.swift */; };
-		15A2275427DDB76B0011945E /* EmployeeListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2275327DDB76B0011945E /* EmployeeListManager.swift */; };
+		15A2275427DDB76B0011945E /* EmployeeListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2275327DDB76B0011945E /* EmployeeListPresenter.swift */; };
 		15A2275627DDDD6E0011945E /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2275527DDDD6E0011945E /* DataSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,8 @@
 		1523342027E858F10051C9D9 /* EmployeeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailsViewController.swift; sourceTree = "<group>"; };
 		1523342527E8783C0051C9D9 /* UIResponder+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extensions.swift"; sourceTree = "<group>"; };
 		1523342727E8787E0051C9D9 /* UIAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAction+Extensions.swift"; sourceTree = "<group>"; };
+		155FB43E2805E406004AD8A2 /* EmployeeListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListProvider.swift; sourceTree = "<group>"; };
+		155FB4402805E673004AD8A2 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		15A2270927DB6FB00011945E /* MoonCascadeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoonCascadeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A2270C27DB6FB00011945E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15A2270E27DB6FB00011945E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,11 +76,10 @@
 		15A2274427DD2BB60011945E /* EmployeePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeePosition.swift; sourceTree = "<group>"; };
 		15A2274627DD2CCD0011945E /* EmployeeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeProject.swift; sourceTree = "<group>"; };
 		15A2274827DD2DB00011945E /* EmployeesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesService.swift; sourceTree = "<group>"; };
-		15A2274A27DD323E0011945E /* EmployeesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesProvider.swift; sourceTree = "<group>"; };
 		15A2274D27DD34290011945E /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		15A2274F27DD3B8C0011945E /* EmployeeListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListAssembly.swift; sourceTree = "<group>"; };
 		15A2275127DD3EAC0011945E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		15A2275327DDB76B0011945E /* EmployeeListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListManager.swift; sourceTree = "<group>"; };
+		15A2275327DDB76B0011945E /* EmployeeListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListPresenter.swift; sourceTree = "<group>"; };
 		15A2275527DDDD6E0011945E /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,7 +114,8 @@
 				15A2275527DDDD6E0011945E /* DataSource.swift */,
 				15A2274F27DD3B8C0011945E /* EmployeeListAssembly.swift */,
 				15A2271027DB6FB00011945E /* EmployeeListViewController.swift */,
-				15A2275327DDB76B0011945E /* EmployeeListManager.swift */,
+				15A2275327DDB76B0011945E /* EmployeeListPresenter.swift */,
+				155FB43E2805E406004AD8A2 /* EmployeeListProvider.swift */,
 			);
 			path = EmployeeList;
 			sourceTree = "<group>";
@@ -195,7 +198,6 @@
 			children = (
 				15A2273D27DD2A9B0011945E /* Models */,
 				15A2274827DD2DB00011945E /* EmployeesService.swift */,
-				15A2274A27DD323E0011945E /* EmployeesProvider.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -208,6 +210,7 @@
 				15A2274627DD2CCD0011945E /* EmployeeProject.swift */,
 				15A2274427DD2BB60011945E /* EmployeePosition.swift */,
 				15A2274227DD2B1A0011945E /* EmployeeContact.swift */,
+				155FB4402805E673004AD8A2 /* ListViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -356,16 +359,17 @@
 				15A2274327DD2B1A0011945E /* EmployeeContact.swift in Sources */,
 				1523342827E8787E0051C9D9 /* UIAction+Extensions.swift in Sources */,
 				15A2275627DDDD6E0011945E /* DataSource.swift in Sources */,
-				15A2275427DDB76B0011945E /* EmployeeListManager.swift in Sources */,
+				15A2275427DDB76B0011945E /* EmployeeListPresenter.swift in Sources */,
 				15A2274527DD2BB60011945E /* EmployeePosition.swift in Sources */,
 				15A2273F27DD2AB30011945E /* EmployeesResponse.swift in Sources */,
 				15A2274E27DD34290011945E /* FileCache.swift in Sources */,
+				155FB43F2805E406004AD8A2 /* EmployeeListProvider.swift in Sources */,
+				155FB4412805E673004AD8A2 /* ListViewModel.swift in Sources */,
 				15A2271127DB6FB00011945E /* EmployeeListViewController.swift in Sources */,
 				15A2275227DD3EAC0011945E /* Constants.swift in Sources */,
 				15A2270D27DB6FB00011945E /* AppDelegate.swift in Sources */,
 				1523342127E858F10051C9D9 /* EmployeeDetailsViewController.swift in Sources */,
 				1523342627E8783C0051C9D9 /* UIResponder+Extensions.swift in Sources */,
-				15A2274B27DD323E0011945E /* EmployeesProvider.swift in Sources */,
 				15A2274127DD2AD70011945E /* Employee.swift in Sources */,
 				15A2270F27DB6FB00011945E /* SceneDelegate.swift in Sources */,
 				15A2274727DD2CCD0011945E /* EmployeeProject.swift in Sources */,

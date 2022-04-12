@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Employee: Codable, Equatable, Hashable {
+struct Employee: Codable, Equatable, Hashable, Sendable {
     let fname: String
     let lname: String
     let contactDetails: EmployeeContacts

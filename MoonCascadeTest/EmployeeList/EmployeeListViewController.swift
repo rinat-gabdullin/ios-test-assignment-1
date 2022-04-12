@@ -12,20 +12,19 @@ import ContactsUI
 class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
 
     private var subsriptions = [AnyCancellable]()
-
-    let employeeListManager: EmployeeListManager
+    private let presenter: EmployeeListPresenter
+    private var listProvider: EmployeeListProvider?
     
     required init?(coder: NSCoder) {
-        employeeListManager = EmployeeListAssembly().make()
+        presenter = EmployeeListAssembly().make()
         super.init(coder: coder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        employeeListManager.startDisplaying(with: tableView)
         tableView.sectionHeaderHeight = 44
         
-        employeeListManager.$lastError
+        presenter.$lastError
             .filter { !$0.isEmpty }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -36,11 +35,14 @@ class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
         CNContactStore().requestAccess(for: .contacts) { _, _ in
             
         }
+        
+        let updatesFlow = presenter.startSendingData()
+        listProvider = EmployeeListProvider(tableView: tableView, updates: updatesFlow)
     }
 
     @IBAction private func refresh(sender: UIRefreshControl) {
         Task {
-            await employeeListManager.reloadData()
+            await presenter.reloadData()
             DispatchQueue.main.async {
                 sender.endRefreshing()                
             }
@@ -54,7 +56,7 @@ class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        employeeListManager.searchString = searchText
+        presenter.searchString = searchText
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,15 +65,16 @@ class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
             segue.identifier == "Detail",
             let indexPath = tableView.indexPathForSelectedRow,
             let destinationViewController = segue.destination as? EmployeeDetailsViewController,
-            let detailsViewModel = employeeListManager.detailsViewModel(for: indexPath)
+            let index = listProvider?.index(for: indexPath),
+            let detailsViewModel = presenter.detailsViewModel(atIndex: index)
         else {
             assertionFailure("Unexpected segue")
             return
         }
-        
+
         destinationViewController.model = detailsViewModel
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         if let controller = segue.destination.sheetPresentationController {
             controller.detents = [.medium(), .large()]
             controller.prefersGrabberVisible = true

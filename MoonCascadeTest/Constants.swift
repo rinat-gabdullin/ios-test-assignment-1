@@ -9,6 +9,7 @@ import Foundation
 
 enum Constant {
     static let dataSources = [
+        // These endpoints change their data every minute
         URL(string: "https://tallinn-jobapp.aw.ee/employee_list")!,
         URL(string: "https://tartu-jobapp.aw.ee/employee_list")!
     ]

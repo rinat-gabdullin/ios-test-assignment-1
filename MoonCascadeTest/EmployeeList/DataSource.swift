@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DataSource: UITableViewDiffableDataSource<EmployeePosition, EmployeeListManager.ViewModel> {
+class DataSource: UITableViewDiffableDataSource<EmployeePosition, ListViewModel> {
     override func tableView(_ tableView: UITableView,
                             titleForHeaderInSection section: Int) -> String? {
         

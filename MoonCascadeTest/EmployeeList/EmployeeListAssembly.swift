@@ -8,13 +8,12 @@
 import Foundation
 
 class EmployeeListAssembly {
-    func make() -> EmployeeListManager {
+    func make() -> EmployeeListPresenter {
         let urlSession = URLSession.shared
         let cache = try? FileCache()
         assert(cache != nil)
         let service = EmployeesService(urlSession: urlSession, sources: Constant.dataSources)
-        let provider = EmployeesProvider(service: service, cache: cache)
-        let manager = EmployeeListManager(provider: provider)
+        let manager = EmployeeListPresenter(service: service, cache: cache)
         return manager
     }
 }
