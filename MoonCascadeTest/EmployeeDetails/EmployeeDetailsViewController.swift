@@ -52,5 +52,10 @@ final class EmployeeDetailsViewController: UIViewController {
         } else {
             assertionFailure("No model")
         }
+        
+    }
+    
+    @IBAction private func close() {
+        dismiss(animated: true)
     }
 }
