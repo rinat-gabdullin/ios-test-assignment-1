@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct EmployeeProject: Codable, Equatable, Hashable {
+struct EmployeeProject: Codable, Equatable, Hashable, ExpressibleByStringLiteral {
     var identifier: String
+    
+    init(stringLiteral value: StringLiteralType) {
+        identifier = value
+    }
     
     init(from decoder: Decoder) throws {
         identifier = try decoder.singleValueContainer().decode(String.self)

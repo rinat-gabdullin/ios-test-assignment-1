@@ -21,7 +21,7 @@ extension URLSession: IURLSession {
     }
 }
 
-class EmployeesService: IEmployeesService {
+final class EmployeesService: IEmployeesService {
     
     let urlSession: IURLSession
     let sources: [URL]

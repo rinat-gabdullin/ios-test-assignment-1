@@ -20,7 +20,7 @@ class FileCache: Cache {
     
     let directoryURL: URL
 
-    private let queue = DispatchQueue(label: "cache")
+    private let queue = DispatchQueue(label: "file-cache.test", attributes: .concurrent)
     
     init() throws {
         encoder.keyEncodingStrategy = .convertToSnakeCase
@@ -35,14 +35,13 @@ class FileCache: Cache {
                                             withIntermediateDirectories: true,
                                             attributes: nil)
         }
-
     }
     
     func save<T>(data: T, key: String) where T: Codable {
-        queue.async {
-            if let data = try? self.encoder.encode(data.self) {
+        queue.async(flags: .barrier) {
+            if let encodedData = try? self.encoder.encode(data.self) {
                 let url = self.url(forKey: key)
-                try? data.write(to: url)
+                try? encodedData.write(to: url)
             }
         }
     }

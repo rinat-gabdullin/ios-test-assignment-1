@@ -1,5 +1,5 @@
 //
-//  EmployeeListManager.swift
+//  EmployeeListPresenter.swift
 //  MoonCascadeTest
 //
 //  Created by Rinat Gabdullin on 13.03.2022.
@@ -12,11 +12,13 @@ import ContactsUI
 
 final class EmployeeListPresenter {
 
+    let cacheKey = "employees"
+    
     @Published var searchString = ""
     @Published private(set) var lastError: String = ""
     @Published private var allEmployees = [Employee]()
     
-    private var subsriptions = [AnyCancellable]()
+    private var subscriptions = [AnyCancellable]()
     private let service: IEmployeesService
     private let cache: Cache?
 
@@ -29,7 +31,7 @@ final class EmployeeListPresenter {
     /// - Returns: Data stream of EmployeesTable
     func startSendingData() -> AnyPublisher<EmployeesTable, Never> {
         allEmployees = loadFromCache()
-        
+
         Task {
             await reloadData()
         }
@@ -51,7 +53,7 @@ final class EmployeeListPresenter {
         $searchString
             .map { $0.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
             .combineLatest($allEmployees)
-        
+
             // Filtering by search string
             .map { (searchString, allEmployees) -> [Employee] in
                 if searchString.isEmpty {
@@ -92,11 +94,11 @@ final class EmployeeListPresenter {
     }
     
     private func loadFromCache() -> [Employee] {
-        cache?.read(key: "employees") ?? []
+        cache?.read(key: cacheKey) ?? []
     }
     
     private func saveToCache(employees: [Employee]) {
-        cache?.save(data: employees, key: "employees")
+        cache?.save(data: employees, key: cacheKey)
     }
     
     func detailsViewModel(atIndex index: Int) -> EmployeeDetailsViewModel? {
