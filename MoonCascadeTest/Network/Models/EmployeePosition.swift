@@ -23,6 +23,10 @@ enum EmployeePosition: String, Codable, CaseIterable, Equatable, Hashable {
         self = decodedValue ?? .other
     }
     
+    var sortingIndex: Int {
+        EmployeePosition.allCases.firstIndex(of: self) ?? 0
+    }
+    
     var title: String {
         switch self {
         case .ios:

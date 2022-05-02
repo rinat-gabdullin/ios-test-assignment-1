@@ -13,10 +13,10 @@ class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
 
     private var subsriptions = [AnyCancellable]()
     private let presenter: EmployeeListPresenter
-    private var listProvider: EmployeeListProvider?
+    private var listProvider: EmployeeTableViewUpdater?
     
     required init?(coder: NSCoder) {
-        presenter = EmployeeListAssembly().make()
+        presenter = ApplicationAssembly().makePresenter()
         super.init(coder: coder)
     }
     
@@ -24,7 +24,7 @@ class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         tableView.sectionHeaderHeight = 44
         
-        presenter.$lastError
+        presenter.errorsPublisher()
             .filter { !$0.isEmpty }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -37,7 +37,7 @@ class EmployeeListViewController: UITableViewController, UISearchBarDelegate {
         }
         
         let updatesFlow = presenter.startSendingData()
-        listProvider = EmployeeListProvider(tableView: tableView, updates: updatesFlow)
+        listProvider = EmployeeTableViewUpdater(tableView: tableView, updates: updatesFlow)
     }
 
     @IBAction private func refresh(sender: UIRefreshControl) {

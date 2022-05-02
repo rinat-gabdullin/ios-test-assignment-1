@@ -9,15 +9,13 @@ import Foundation
 import UIKit
 import Combine
 
-final class EmployeeListProvider {
+final class EmployeeTableViewUpdater {
     
-    private weak var tableView: UITableView?
     private let dataSource: DataSource
     private var tableData = EmployeesTable()
     private var subscriptions = [AnyCancellable]()
 
     init(tableView: UITableView, updates: AnyPublisher<EmployeesTable, Never>) {
-        self.tableView = tableView
     
         dataSource = DataSource(tableView: tableView) { tableView, indexPath, itemIdentifier in
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)

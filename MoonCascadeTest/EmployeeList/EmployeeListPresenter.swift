@@ -11,68 +11,62 @@ import Combine
 import ContactsUI
 
 final class EmployeeListPresenter {
-
-    let cacheKey = "employees"
     
     @Published var searchString = ""
-    @Published private(set) var lastError: String = ""
-    @Published private var allEmployees = [Employee]()
+    
+    private let provider: EmployeeProvider
     
     private var subscriptions = [AnyCancellable]()
-    private let service: IEmployeesService
-    private let cache: Cache?
-
-    internal init(service: IEmployeesService, cache: Cache?) {
-        self.service = service
-        self.cache = cache
-    }
     
+    internal init(provider: EmployeeProvider) {
+        self.provider = provider
+    }
+
     /// Reloads data from cache and network
     /// - Returns: Data stream of EmployeesTable
     func startSendingData() -> AnyPublisher<EmployeesTable, Never> {
-        allEmployees = loadFromCache()
-
+        
         Task {
-            await reloadData()
+            await provider.reloadData()
         }
         
         return updatesFlow()
     }
     
-    // Reloads data from network
     func reloadData() async {
-        do {
-            let fetched = try await fetch()
-            allEmployees = fetched
-        } catch {
-            lastError = error.localizedDescription
-        }
+        await provider.reloadData()
+    }
+    
+    func errorsPublisher() -> AnyPublisher<String, Never> {
+        provider.$lastError.eraseToAnyPublisher()
     }
     
     private func updatesFlow() -> AnyPublisher<EmployeesTable, Never> {
         $searchString
             .map { $0.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
-            .combineLatest($allEmployees)
-
+            .combineLatest(provider.$allEmployees)
+        
             // Filtering by search string
-            .map { (searchString, allEmployees) -> [Employee] in
+            .map { (searchString, allEmployees) -> [EnumeratedSequence<[Employee]>.Element] in
+                let enumerated = allEmployees.enumerated()
+                
                 if searchString.isEmpty {
-                    return allEmployees
+                    return enumerated.filter { _ in true } // no idea why `filter` is required
                 }
-                return allEmployees.filter { $0.searchString.contains(searchString) }
+                
+                return enumerated.filter { $0.element.searchString.contains(searchString) }
             }
         
             // Converting to ListViewModel and grouping them by positions
             .map { filteredEmployees -> EmployeesByPosition in
                 let new = EmployeesByPosition()
+                
                 return filteredEmployees
-                    .indices
-                    .map { (index: $0, model: filteredEmployees[$0]) }
-                    .sorted(by: { $0.model.lname < $1.model.lname })
-                    .reduce(new) { partialResult, tuple in
-                        let employee = tuple.model
+                    .sorted(by: { $0.element.lname < $1.element.lname })
+                    .reduce(new) { partialResult, item in
+                        let employee = item.element
                         var result = partialResult
-                        let viewModel = ListViewModel(name: employee.fullName, index: tuple.index)
+                        let viewModel = ListViewModel(name: employee.fullName, index: item.offset)
                         result[employee.position, default: []].append(viewModel)
                         return result
                     }
@@ -86,23 +80,9 @@ final class EmployeeListPresenter {
         
             .eraseToAnyPublisher()
     }
-
-    private func fetch() async throws -> [Employee] {
-        let result = try await service.fetchAll()
-        saveToCache(employees: result)
-        return result
-    }
-    
-    private func loadFromCache() -> [Employee] {
-        cache?.read(key: cacheKey) ?? []
-    }
-    
-    private func saveToCache(employees: [Employee]) {
-        cache?.save(data: employees, key: cacheKey)
-    }
     
     func detailsViewModel(atIndex index: Int) -> EmployeeDetailsViewModel? {
-        let model = allEmployees[index]
+        let model = provider.allEmployees[index]
         return model.makeDetailsViewModel()
     }
 }
@@ -134,5 +114,5 @@ extension Employee {
         
         return UIAction.forContact(contact)
     }
-
+    
 }
